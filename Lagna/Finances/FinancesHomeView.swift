@@ -1,15 +1,16 @@
 import SwiftUI
 
 struct FinancesHomeView: View {
+    @State private var isAddingVendor = false
+
     var body: some View {
-        VStack(alignment: .leading, spacing: 0) {
+        VStack(alignment: .leading, spacing: WPSpacing.space200) {
             Text("Finances")
                 .font(WPFont.pageTitle)
                 .foregroundStyle(WPColor.Text.primary)
                 .tracking(WPTracking.standard)
-                .frame(maxWidth: .infinity, alignment: .leading)
+                .frame(maxWidth: .infinity, minHeight: 39, alignment: .leading)
                 .padding(.horizontal, WPSpacing.space400)
-                .padding(.bottom, WPSpacing.space600)
 
             VStack(spacing: WPSpacing.space600) {
                 budgetCard
@@ -38,12 +39,20 @@ struct FinancesHomeView: View {
                     style: .continuous
                 )
             )
+            .ignoresSafeArea(edges: [.bottom, .horizontal])
         }
+        .padding(.top, WPSpacing.space600)
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
         .background {
             Rectangle()
                 .fill(WPColor.Surface.page)
                 .ignoresSafeArea()
+        }
+        .sheet(isPresented: $isAddingVendor) {
+            AddVendorSheetView()
+                .presentationDetents([.large])
+                .presentationDragIndicator(.hidden)
+                .presentationCornerRadius(WPRadius.xl4)
         }
     }
 
@@ -117,7 +126,9 @@ struct FinancesHomeView: View {
                     .frame(maxWidth: .infinity)
             }
 
-            PrimaryButton(title: "Add a vendor")
+            PrimaryButton(title: "Add a vendor") {
+                isAddingVendor = true
+            }
         }
         .padding(.vertical, WPSpacing.space1200)
         .frame(maxWidth: .infinity)
