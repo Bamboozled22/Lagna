@@ -3,6 +3,7 @@ import SwiftUI
 struct PrimaryButton: View {
     var title: String
     var prefixImage: String? = "IconPlus"
+    var fillsWidth: Bool = false
     var action: () -> Void = {}
 
     var body: some View {
@@ -21,6 +22,7 @@ struct PrimaryButton: View {
             .foregroundStyle(WPColor.Text.onAccent)
             .padding(.horizontal, WPSpacing.space400)
             .padding(.vertical, WPSpacing.space200)
+            .frame(maxWidth: fillsWidth ? .infinity : nil)
             .frame(height: WPSize.touchTargetMin)
             .background(WPColor.Surface.accent, in: RoundedRectangle(cornerRadius: WPRadius.md, style: .continuous))
         }
